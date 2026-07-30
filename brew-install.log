@@ -1,0 +1,277 @@
+✔︎ JSON API packages.monterey.jws.json
+Warning: You are using macOS 12.
+We (and Apple) do not provide support for this old version.
+You may have better luck with MacPorts which supports older versions of macOS:
+  https://www.macports.org
+
+This is a Tier 3 configuration:
+  https://docs.brew.sh/Support-Tiers#tier-3
+You can report issues with Tier 3 configurations to Homebrew/* repositories!
+Read the above document before opening any issues or PRs.
+
+==> Would install 2 formulae:
+php composer
+✔︎ API Source php.rb
+✔︎ API Source composer.rb
+Warning: Building apr-util from source as the bottle needs:
+- `HOMEBREW_CELLAR=/usr/local/Cellar` (yours is /Users/mac/.homebrew/Cellar)
+- `HOMEBREW_PREFIX=/usr/local` (yours is /Users/mac/.homebrew)
+==> Would install 61 dependencies for php:
+apr
+ca-certificates
+openssl@3
+apr-util
+argon2
+m4
+autoconf
+cmake
+brotli
+pkgconf
+libnghttp2
+libnghttp3
+libngtcp2
+libunistring
+json-c
+gettext
+libidn2
+libpsl
+libssh2
+lz4
+xz
+zstd
+curl
+libtool
+unixodbc
+freetds
+libpng
+freetype
+ninja
+mpdecimal
+readline
+sqlite
+expat
+python@3.14
+meson
+fontconfig
+nasm
+jpeg-turbo
+libvmaf
+aom
+dav1d
+libavif
+giflib
+webp
+libtiff
+gd
+gmp
+icu4c@78
+krb5
+docbook
+docbook-xsl
+libpq
+libsodium
+libzip
+net-snmp
+automake
+oniguruma
+openldap
+pcre2
+tidy-html5
+httpd
+==> Would install 62 dependencies for composer:
+apr
+ca-certificates
+openssl@3
+apr-util
+argon2
+m4
+autoconf
+cmake
+brotli
+pkgconf
+libnghttp2
+libnghttp3
+libngtcp2
+libunistring
+json-c
+gettext
+libidn2
+libpsl
+libssh2
+lz4
+xz
+zstd
+curl
+libtool
+unixodbc
+freetds
+libpng
+freetype
+ninja
+mpdecimal
+readline
+sqlite
+expat
+python@3.14
+meson
+fontconfig
+nasm
+jpeg-turbo
+libvmaf
+aom
+dav1d
+libavif
+giflib
+webp
+libtiff
+gd
+gmp
+icu4c@78
+krb5
+docbook
+docbook-xsl
+libpq
+libsodium
+libzip
+net-snmp
+automake
+oniguruma
+openldap
+pcre2
+tidy-html5
+httpd
+php
+==> Fetching downloads for: php and composer
+✔︎ API Source apr.rb
+✔︎ Formula apr (1.7.6)
+✔︎ Bottle ca-certificates (2026-07-16)
+✔︎ API Source openssl@3.rb
+✔︎ Formula openssl@3 (3.6.3)
+✔︎ API Source apr-util.rb
+✔︎ Formula apr-util (1.6.3)
+✔︎ Bottle argon2 (20190702_1)
+✔︎ API Source m4.rb
+✔︎ Formula m4 (1.4.21)
+✔︎ API Source autoconf.rb
+✔︎ Formula autoconf (2.73)
+✔︎ API Source cmake.rb
+✔︎ Formula cmake (4.4.0)
+✔︎ API Source brotli.rb
+✔︎ Formula brotli (1.2.0)
+✔︎ API Source pkgconf.rb
+✔︎ Formula pkgconf (3.0.4)
+✔︎ API Source libnghttp2.rb
+✔︎ Formula libnghttp2 (1.69.0)
+✔︎ API Source libnghttp3.rb
+✔︎ Formula libnghttp3 (1.17.0)
+✔︎ API Source libngtcp2.rb
+✔︎ Formula libngtcp2 (1.24.0)
+✔︎ API Source libunistring.rb
+✔︎ Formula libunistring (1.4.2)
+✔︎ API Source json-c.rb
+✔︎ Formula json-c (0.19)
+✔︎ API Source gettext.rb
+✔︎ Formula gettext (1.0)
+✔︎ API Source libidn2.rb
+✔︎ Formula libidn2 (2.3.8)
+✔︎ API Source libpsl.rb
+✔︎ Formula libpsl (0.23.0)
+✔︎ API Source libssh2.rb
+✔︎ Patch 256d04b60d80bf1190e96b0ad1e91b2174d744b1.patch?full_index=1
+✔︎ Patch 17626857d20b3c9a1addfa45979dadcee1cd84a4.patch?full_index=1
+✔︎ Patch a9758da45a52bc8c630ec9493804d0c6ea30b24a.patch?full_index=1
+✔︎ Formula libssh2 (1.11.1)
+✔︎ Bottle lz4 (1.10.0)
+✔︎ API Source xz.rb
+✔︎ Formula xz (5.8.3)
+✔︎ API Source zstd.rb
+✔︎ Formula zstd (1.5.7)
+✔︎ API Source curl.rb
+✔︎ Formula curl (8.21.0)
+✔︎ API Source libtool.rb
+✔︎ Formula libtool (2.6.2)
+✔︎ API Source unixodbc.rb
+✔︎ Formula unixodbc (2.3.14)
+✔︎ API Source freetds.rb
+✔︎ Formula freetds (1.5.18)
+✔︎ API Source libpng.rb
+✔︎ Formula libpng (1.6.58)
+✔︎ API Source freetype.rb
+✔︎ Formula freetype (2.14.3)
+✔︎ API Source ninja.rb
+✔︎ Formula ninja (1.13.2)
+✔︎ API Source mpdecimal.rb
+✔︎ Formula mpdecimal (4.0.1)
+✔︎ API Source readline.rb
+✔︎ Patch readline83-001
+✔︎ Patch readline83-002
+✔︎ Patch readline83-003
+✔︎ Formula readline (8.3.3)
+✔︎ API Source sqlite.rb
+✔︎ Formula sqlite (3.53.3)
+✔︎ API Source expat.rb
+✔︎ Formula expat (2.8.2)
+✔︎ API Source python@3.14.rb
+✔︎ Resource python@3.14--flit-core
+✔︎ Resource python@3.14--packaging
+✔︎ Resource python@3.14--pip
+✔︎ Resource python@3.14--wheel
+✔︎ Bottle meson (1.11.2)
+✔︎ API Source fontconfig.rb
+✔︎ Formula fontconfig (2.18.2)
+✔︎ API Source nasm.rb
+✔︎ Formula nasm (3.02)
+✔︎ API Source jpeg-turbo.rb
+✔︎ Formula jpeg-turbo (3.2.0)
+✔︎ API Source libvmaf.rb
+✔︎ Formula libvmaf (3.2.0)
+✔︎ API Source aom.rb
+✔︎ API Source dav1d.rb
+✔︎ Formula dav1d (1.5.4)
+✔︎ API Source libavif.rb
+✔︎ Resource libavif--libargparse
+✔︎ Formula libavif (1.4.2)
+✔︎ API Source giflib.rb
+✔︎ Formula giflib (6.1.3)
+✔︎ API Source webp.rb
+✔︎ Formula webp (1.6.0)
+✔︎ API Source libtiff.rb
+✔︎ Formula libtiff (4.7.2)
+✔︎ Bottle gd (2.3.3_6)
+✔︎ Bottle gmp (6.3.0)
+✔︎ API Source icu4c@78.rb
+✔︎ Formula icu4c@78 (78.3)
+✔︎ API Source krb5.rb
+✔︎ Formula krb5 (1.22.2)
+✔︎ Bottle docbook (5.2.1)
+✔︎ Bottle docbook-xsl (1.79.2_1)
+✔︎ API Source libpq.rb
+✔︎ API Source libsodium.rb
+✔︎ Formula libsodium (1.0.22)
+✔︎ API Source libzip.rb
+✔︎ Formula libzip (1.11.4)
+✔︎ API Source net-snmp.rb
+✔︎ API Source automake.rb
+✔︎ Formula automake (1.18.1)
+✔︎ API Source oniguruma.rb
+✔︎ Formula oniguruma (6.9.10)
+✔︎ API Source openldap.rb
+✔︎ API Source pcre2.rb
+✔︎ Formula pcre2 (10.47)
+✔︎ Bottle tidy-html5 (5.8.0)
+✔︎ API Source httpd.rb
+✔︎ Formula httpd (2.4.68)
+✔︎ Formula php (8.5.8)
+✔︎ Formula composer (2.10.2)
+✔︎ Formula net-snmp (5.9.5.2)
+✔︎ Formula openldap (2.6.13)
+✔︎ Formula libpq (18.4)
+✔︎ Formula aom (3.14.1)
+✔︎ Formula python@3.14 (3.14.6)
+==> Installing dependencies for php: apr, ca-certificates, openssl@3, apr-util, cmake, brotli, pkgconf, libnghttp2, pcre2, httpd, argon2, m4, autoconf, libnghttp3, libngtcp2, libunistring, json-c, gettext, libidn2, libpsl, libssh2, lz4, xz, zstd, curl, libtool, unixodbc, freetds, libpng, freetype, ninja, mpdecimal, readline, sqlite, expat, python@3.14, meson, fontconfig, nasm, jpeg-turbo, libvmaf, aom, dav1d, libavif, giflib, webp, libtiff, gd, gmp, icu4c@78, krb5, docbook, docbook-xsl, libpq, libsodium, libzip, net-snmp, automake, oniguruma, openldap and tidy-html5
+==> Installing php dependency: apr
+==> ./configure
+==> make install
+🍺  /Users/mac/.homebrew/Cellar/apr/1.7.6: 58 files, 1.5MB, built in 7 minutes
+==> Installing php dependency: ca-certificates
+==> Pouring ca-certificates--2026-07-16.all.bottle.tar.gz

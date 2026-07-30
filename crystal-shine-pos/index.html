@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crystal Shine POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="assets/logo.png" alt="Crystal Shine" class="brand-logo">
+                <div class="brand-text">
+                    <span class="brand-crystal">CRYSTAL</span>
+                    <span class="brand-shine">SHINE</span>
+                    <small>Car Wash & Carpet Cleaning</small>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-view="pos">
+                    <i class="bi bi-cart3"></i> New Sale
+                </button>
+                <button class="nav-item" data-view="history">
+                    <i class="bi bi-clock-history"></i> Sales History
+                </button>
+                <button class="nav-item" data-view="reports">
+                    <i class="bi bi-bar-chart-line"></i> Reports
+                </button>
+                <button class="nav-item" data-view="settings">
+                    <i class="bi bi-gear"></i> Settings
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="today-summary">
+                    <span>Today's Sales</span>
+                    <strong id="sidebarTodayTotal">KES 0</strong>
+                    <small id="sidebarTodayCount">0 transactions</small>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- POS View -->
+            <section id="view-pos" class="view active">
+                <header class="view-header">
+                    <h1>New Sale</h1>
+                    <div class="header-actions">
+                        <span class="datetime" id="currentDateTime"></span>
+                    </div>
+                </header>
+
+                <div class="pos-layout">
+                    <!-- Services Grid -->
+                    <div class="services-panel">
+                        <h2>Select Services</h2>
+                        <div class="services-grid" id="servicesGrid"></div>
+                    </div>
+
+                    <!-- Cart Panel -->
+                    <div class="cart-panel">
+                        <div class="customer-section">
+                            <h3><i class="bi bi-person"></i> Customer & Vehicle</h3>
+                            <div class="form-row">
+                                <input type="text" id="customerName" placeholder="Customer name (optional)">
+                                <input type="tel" id="customerPhone" placeholder="Phone number">
+                            </div>
+                            <div class="form-row">
+                                <input type="text" id="vehiclePlate" placeholder="Plate number *" required>
+                                <select id="vehicleType">
+                                    <option value="saloon">Saloon / Sedan</option>
+                                    <option value="suv">SUV / 4x4</option>
+                                    <option value="pickup">Pickup / Lorry</option>
+                                    <option value="motorcycle">Motorcycle</option>
+                                    <option value="carpet">Carpet Only</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="cart-section">
+                            <div class="cart-header">
+                                <h3><i class="bi bi-receipt"></i> Order</h3>
+                                <button class="btn-clear" id="clearCart" title="Clear cart">
+                                    <i class="bi bi-trash"></i> Clear
+                                </button>
+                            </div>
+                            <div class="cart-items" id="cartItems">
+                                <p class="cart-empty">No services selected</p>
+                            </div>
+                            <div class="cart-totals">
+                                <div class="total-row">
+                                    <span>Subtotal</span>
+                                    <span id="subtotal">KES 0</span>
+                                </div>
+                                <div class="total-row discount-row">
+                                    <span>Discount</span>
+                                    <div class="discount-input">
+                                        <input type="number" id="discountAmount" min="0" value="0" placeholder="0">
+                                    </div>
+                                </div>
+                                <div class="total-row grand-total">
+                                    <span>Total</span>
+                                    <span id="grandTotal">KES 0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-section">
+                            <h3><i class="bi bi-wallet2"></i> Payment Method</h3>
+                            <div class="payment-methods">
+                                <button class="payment-btn active" data-method="cash">
+                                    <i class="bi bi-cash-stack"></i> Cash
+                                </button>
+                                <button class="payment-btn" data-method="mpesa">
+                                    <i class="bi bi-phone"></i> M-Pesa
+                                </button>
+                                <button class="payment-btn" data-method="card">
+                                    <i class="bi bi-credit-card"></i> Card
+                                </button>
+                            </div>
+                            <div class="mpesa-ref" id="mpesaRefSection" hidden>
+                                <input type="text" id="mpesaRef" placeholder="M-Pesa transaction code">
+                            </div>
+                        </div>
+
+                        <button class="btn-checkout" id="checkoutBtn" disabled>
+                            <i class="bi bi-check-circle"></i> Complete Sale
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History View -->
+            <section id="view-history" class="view">
+                <header class="view-header">
+                    <h1>Sales History</h1>
+                    <div class="header-actions">
+                        <input type="date" id="historyDateFilter" class="date-filter">
+                        <button class="btn-secondary" id="exportCsv">
+                            <i class="bi bi-download"></i> Export CSV
+                        </button>
+                    </div>
+                </header>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Receipt #</th>
+                                <th>Date/Time</th>
+                                <th>Customer</th>
+                                <th>Plate</th>
+                                <th>Services</th>
+                                <th>Payment</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody"></tbody>
+                    </table>
+                    <p class="empty-state" id="historyEmpty">No sales recorded yet.</p>
+                </div>
+            </section>
+
+            <!-- Reports View -->
+            <section id="view-reports" class="view">
+                <header class="view-header">
+                    <h1>Reports</h1>
+                    <div class="header-actions">
+                        <select id="reportPeriod">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="bi bi-currency-exchange"></i>
+                        <div>
+                            <span>Total Revenue</span>
+                            <strong id="reportRevenue">KES 0</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="bi bi-receipt-cutoff"></i>
+                        <div>
+                            <span>Transactions</span>
+                            <strong id="reportTransactions">0</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="bi bi-graph-up"></i>
+                        <div>
+                            <span>Average Sale</span>
+                            <strong id="reportAverage">KES 0</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="bi bi-star"></i>
+                        <div>
+                            <span>Top Service</span>
+                            <strong id="reportTopService">—</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Revenue by Service</h3>
+                        <div id="serviceBreakdown" class="breakdown-list"></div>
+                    </div>
+                    <div class="report-card">
+                        <h3>Payment Methods</h3>
+                        <div id="paymentBreakdown" class="breakdown-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section id="view-settings" class="view">
+                <header class="view-header">
+                    <h1>Settings</h1>
+                </header>
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Business Information</h3>
+                        <label>Business Name</label>
+                        <input type="text" id="settingBusinessName" value="Crystal Shine">
+                        <label>Tagline</label>
+                        <input type="text" id="settingTagline" value="Car Wash and Carpet Cleaning Services">
+                        <label>Phone</label>
+                        <input type="tel" id="settingPhone" placeholder="+254 7XX XXX XXX">
+                        <label>Location</label>
+                        <input type="text" id="settingLocation" placeholder="Business address">
+                    </div>
+                    <div class="settings-card">
+                        <h3>Service Prices (KES)</h3>
+                        <div id="priceSettings" class="price-settings"></div>
+                        <button class="btn-primary" id="saveSettings">
+                            <i class="bi bi-check-lg"></i> Save Settings
+                        </button>
+                    </div>
+                    <div class="settings-card danger-zone">
+                        <h3>Data Management</h3>
+                        <p>Export all sales data or reset the system.</p>
+                        <div class="danger-actions">
+                            <button class="btn-secondary" id="backupData">
+                                <i class="bi bi-cloud-download"></i> Backup Data
+                            </button>
+                            <button class="btn-danger" id="resetData">
+                                <i class="bi bi-exclamation-triangle"></i> Reset All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal-overlay" id="receiptModal" hidden>
+        <div class="modal receipt-modal">
+            <div class="modal-header">
+                <h2>Sale Complete</h2>
+                <button class="modal-close" id="closeReceipt">&times;</button>
+            </div>
+            <div class="receipt" id="receiptContent"></div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="newSaleBtn">
+                    <i class="bi bi-plus-circle"></i> New Sale
+                </button>
+                <button class="btn-primary" id="printReceipt">
+                    <i class="bi bi-printer"></i> Print Receipt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" hidden></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

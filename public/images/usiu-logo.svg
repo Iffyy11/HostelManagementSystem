@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="USIU-Africa">
+  <defs>
+    <linearGradient id="usiuBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#003B71"/>
+      <stop offset="100%" stop-color="#002855"/>
+    </linearGradient>
+    <linearGradient id="usiuGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FDB913"/>
+      <stop offset="100%" stop-color="#E5A100"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#usiuBlue)"/>
+  <circle cx="60" cy="60" r="52" fill="none" stroke="url(#usiuGold)" stroke-width="3"/>
+  <path fill="url(#usiuGold)" d="M60 24 78 38v28c0 14-8 24-18 28-10-4-18-14-18-28V38Z"/>
+  <rect x="54" y="46" width="12" height="10" rx="1" fill="#003B71"/>
+  <rect x="50" y="58" width="8" height="8" rx="1" fill="#003B71"/>
+  <rect x="62" y="58" width="8" height="8" rx="1" fill="#003B71"/>
+  <text x="60" y="98" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#FDB913">USIU</text>
+</svg>
