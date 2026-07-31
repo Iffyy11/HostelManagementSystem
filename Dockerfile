@@ -1,5 +1,7 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
+# Laravel 11, dompdf, and spatie/laravel-permission runtime extensions.
+# composer.lock pulls Symfony 8.x, which requires PHP >= 8.4.1.
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -10,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    libicu-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo \
@@ -17,10 +20,11 @@ RUN apt-get update && apt-get install -y \
         pdo_pgsql \
         zip \
         mbstring \
-        dom \
-        xml \
-        gd \
         bcmath \
+        gd \
+        intl \
+        opcache \
+        pcntl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -33,6 +37,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 COPY . .
 
 RUN composer dump-autoload --optimize \
+    && php artisan package:discover --ansi \
     && mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache \
     && chmod +x scripts/render-start.sh
