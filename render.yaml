@@ -1,0 +1,89 @@
+# Render Blueprint — USIU Hostel Management System
+# https://render.com/docs/blueprint-spec
+#
+# Deploy: Dashboard → New → Blueprint → connect GitHub repo → Apply
+# Or set up manually using docs/DEPLOY_RENDER.md
+
+databases:
+  - name: usiu-hostel-db
+    plan: free
+    databaseName: hostel_management
+    user: hostel
+
+services:
+  - type: web
+    name: usiu-hostel
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /up
+    autoDeployTrigger: commit
+    envVars:
+      - key: APP_NAME
+        value: "USIU Hostel"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      # Set after first deploy to your Render URL, e.g. https://usiu-hostel.onrender.com
+      - key: APP_URL
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: info
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: usiu-hostel-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: usiu-hostel-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: usiu-hostel-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: usiu-hostel-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: usiu-hostel-db
+          property: password
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: MAIL_MAILER
+        value: log
+      - key: HOSTEL_BOOKING_FEE
+        value: "15000"
+      - key: INSTITUTIONAL_EMAIL_DOMAIN
+        value: students.usiu.ac.ke
+      - key: MPESA_ENVIRONMENT
+        value: sandbox
+      - key: MPESA_SHORTCODE
+        value: "174379"
+      - key: MPESA_CALLBACK_URL
+        sync: false
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_DEMO_ANY_PHONE
+        value: "false"
+      - key: AFRICASTALKING_FROM
+        value: USIUHOSTEL

@@ -14,6 +14,7 @@ use App\Models\Warden;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -34,9 +35,15 @@ class DashboardController extends Controller
             ->groupBy('block_name')
             ->get();
 
+        $monthExpression = match (DB::connection()->getDriverName()) {
+            'pgsql' => "TO_CHAR(transaction_date, 'YYYY-MM')",
+            'sqlite' => "strftime('%Y-%m', transaction_date)",
+            default => "DATE_FORMAT(transaction_date, '%Y-%m')",
+        };
+
         $revenueByMonth = Payment::where('status', 'confirmed')
             ->where('transaction_date', '>=', now()->subMonths(6))
-            ->selectRaw("DATE_FORMAT(transaction_date, '%Y-%m') as month, SUM(amount) as total")
+            ->selectRaw("{$monthExpression} as month, SUM(amount) as total")
             ->groupBy('month')
             ->orderBy('month')
             ->get();
