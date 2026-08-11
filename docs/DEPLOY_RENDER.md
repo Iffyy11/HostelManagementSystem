@@ -234,8 +234,9 @@ For a demo deployment, uploads work until the next redeploy.
 
 | Issue | Fix |
 |-------|-----|
-| 500 on first visit | Check **Logs**; ensure `APP_KEY` is set |
-| Database connection error | Verify `DB_*` vars match PostgreSQL dashboard; use **Internal** URL if DB and app are on Render |
+| Exited with status 1 at startup | Check **Logs** for the first `ERROR:` line — usually missing `APP_KEY`, unlinked `DB_*` vars, missing PHP `dom`/`xml` extensions, or PostgreSQL SSL (`DB_SSLMODE=require`) |
+| 500 on first visit | Check **Logs**; ensure `APP_KEY` is set and starts with `base64:` |
+| Database connection error | Verify `DB_*` vars match PostgreSQL dashboard; use **Internal** URL if DB and app are on Render; set `DB_SSLMODE=require` |
 | M-Pesa callback not received | Confirm `APP_URL` / `MPESA_CALLBACK_URL` use `https://`; wake the service before testing |
 | Admin revenue chart empty | Fixed for PostgreSQL; redeploy latest code |
 | Slow cold start | Normal on free tier; upgrade or use cron ping |
