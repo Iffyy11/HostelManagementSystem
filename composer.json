@@ -71,6 +71,9 @@
             "advisories": {
                 "block": false
             }
+        },
+        "platform": {
+            "php": "8.4.1"
         }
     },
     "minimum-stability": "stable",

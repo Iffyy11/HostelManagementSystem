@@ -108,6 +108,19 @@ docker compose exec app php artisan storage:link
 
 App runs at **http://localhost:8000**
 
+## Deploy to Render
+
+Production deploy uses Docker + PostgreSQL on [Render](https://render.com) (free tier).
+
+**If you already have `usiu-hostel-db`:** do not run Blueprint again — open **usiu-hostel** → **Manual Deploy**.
+
+1. Push latest `main` to GitHub.
+2. Link web service env vars to **usiu-hostel-db** (Internal credentials).
+3. Set `APP_URL`, M-Pesa keys, and optionally `RUN_SEEDERS=true` for first deploy.
+4. After deploy: Shell → `php artisan db:seed --force` (if not seeded).
+
+Full guide: [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md)
+
 ## Project Structure
 
 ```
