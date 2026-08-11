@@ -58,40 +58,33 @@ attempt=0
 max_attempts=15
 while [ "$attempt" -lt "$max_attempts" ]; do
   attempt=$((attempt + 1))
+  db_log="/tmp/db-connect-$$.log"
   if php -r '
-$url = getenv("DB_URL") ?: getenv("DATABASE_URL");
-if ($url) {
-    try {
-        new PDO($url, null, null, [PDO::ATTR_TIMEOUT => 5]);
-        exit(0);
-    } catch (Throwable $e) {
-        exit(1);
-    }
-}
-$host = getenv("DB_HOST");
-$port = getenv("DB_PORT") ?: "5432";
-$db = getenv("DB_DATABASE");
-$user = getenv("DB_USERNAME");
-$pass = getenv("DB_PASSWORD");
-if (! $host || ! $db) {
-    exit(1);
-}
-$sslmode = getenv("DB_SSLMODE") ?: "require";
-$dsn = "pgsql:host={$host};port={$port};dbname={$db};sslmode={$sslmode}";
+require "vendor/autoload.php";
+$app = require "bootstrap/app.php";
+$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 try {
-    new PDO($dsn, $user, $pass, [PDO::ATTR_TIMEOUT => 5]);
+    Illuminate\Support\Facades\DB::connection()->getPdo();
     exit(0);
 } catch (Throwable $e) {
+    fwrite(STDERR, "DB error: " . $e->getMessage() . PHP_EOL);
     exit(1);
 }
-'; then
+' 2>"$db_log"; then
     echo "==> Database connection OK"
+    rm -f "$db_log"
     break
   fi
   if [ "$attempt" -eq "$max_attempts" ]; then
     echo "ERROR: Could not connect to PostgreSQL after ${max_attempts} attempts."
-    echo "  DB_HOST=${DB_HOST:-from DATABASE_URL} DB_SSLMODE=${DB_SSLMODE:-require}"
-    echo "  Use Internal Database credentials from usiu-hostel-db (same Render region)."
+    cat "$db_log" 2>/dev/null || true
+    rm -f "$db_log"
+    echo ""
+    echo "Checklist:"
+    echo "  1. Web service and usiu-hostel-db must be in the SAME Render region (Internal URL)."
+    echo "  2. Use Internal credentials from usiu-hostel-db → Info (not External URL)."
+    echo "  3. Set DB_SSLMODE=prefer (internal) or require (external only)."
+    echo "  4. Confirm DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD are set."
     exit 1
   fi
   echo "  attempt ${attempt}/${max_attempts} — retrying in 3s..."

@@ -37,7 +37,7 @@ services:
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_SSLMODE
-        value: require
+        value: prefer
       - key: DB_HOST
         fromDatabase:
           name: usiu-hostel-db

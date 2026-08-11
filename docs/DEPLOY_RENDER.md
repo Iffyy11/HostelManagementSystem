@@ -28,7 +28,7 @@ Deploy the Laravel 11 app to [Render](https://render.com) with **PostgreSQL** (f
 | `APP_DEBUG` | `false` |
 | `APP_URL` | `https://usiu-hostel.onrender.com` (your URL) |
 | `DB_CONNECTION` | `pgsql` |
-| `DB_SSLMODE` | `require` |
+| `DB_SSLMODE` | `prefer` |
 | `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | From **usiu-hostel-db** → Internal |
 | `SESSION_DRIVER` | `database` |
 | `CACHE_STORE` | `database` |
@@ -71,7 +71,7 @@ php artisan db:seed --force
 | Issue | Fix |
 |-------|-----|
 | Exited status 1 | Check logs for `ERROR:` — usually `APP_KEY`, DB vars, or SSL |
-| DB connection fail | Use **Internal** DB host; set `DB_SSLMODE=require` |
+| DB connection fail | Same **region** for web + DB; use **Internal** host; set `DB_SSLMODE=prefer` |
 | 419 on login | `APP_URL` must match your Render URL exactly |
 | Slow first load | Free tier cold start (~30–60s after idle) |
 
