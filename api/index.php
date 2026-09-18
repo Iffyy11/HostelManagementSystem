@@ -14,6 +14,16 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// PHP 8.5 flags a constant in Laravel's own vendor config while it loads, before
+// Laravel's error handler exists, so the notice would be printed into the page.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
+// Send logs to Vercel's runtime logs (a file under /tmp is unreadable there).
+if (getenv('LOG_CHANNEL') === false) {
+    $_ENV['LOG_CHANNEL'] = $_SERVER['LOG_CHANNEL'] = 'stderr';
+    putenv('LOG_CHANNEL=stderr');
+}
+
 $storage = '/tmp/storage';
 
 foreach ([
