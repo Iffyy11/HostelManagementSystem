@@ -32,9 +32,9 @@ Leave **Framework Preset** as detected and **Build / Output** settings empty —
 | `APP_ENV` | `production` |
 | `APP_DEBUG` | `false` |
 | `APP_URL` | `https://<your-project>.vercel.app` (exact URL, or login gives 419) |
-| `LOG_CHANNEL` | `stderr` (shows in Vercel → Logs) |
-| `DB_CONNECTION` | `pgsql` |
-| `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | Render: **usiu-hostel-db → External** credentials |
+| `LOG_CHANNEL` | not needed — `api/index.php` always logs to stderr (Vercel → Logs) |
+| `DB_CONNECTION` | `pgsql` — **required**: unset, Laravel defaults to SQLite and ignores `DATABASE_URL` (every page that uses the session returns 500) |
+| `DATABASE_URL` | Neon pooled connection string (added by the Vercel → Neon integration). Or use `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` for any other Postgres |
 | `DB_SSLMODE` | `require` |
 | `SESSION_DRIVER` | `database` |
 | `CACHE_STORE` | `database` |

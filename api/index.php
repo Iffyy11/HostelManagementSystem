@@ -18,11 +18,10 @@ define('LARAVEL_START', microtime(true));
 // Laravel's error handler exists, so the notice would be printed into the page.
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
-// Send logs to Vercel's runtime logs (a file under /tmp is unreadable there).
-if (getenv('LOG_CHANNEL') === false) {
-    $_ENV['LOG_CHANNEL'] = $_SERVER['LOG_CHANNEL'] = 'stderr';
-    putenv('LOG_CHANNEL=stderr');
-}
+// Always log to Vercel's runtime logs: a log file under /tmp is unreadable there,
+// so an inherited LOG_CHANNEL=stack/single would hide every error.
+$_ENV['LOG_CHANNEL'] = $_SERVER['LOG_CHANNEL'] = 'stderr';
+putenv('LOG_CHANNEL=stderr');
 
 $storage = '/tmp/storage';
 
