@@ -70,31 +70,11 @@ if ($env('DB_CONNECTION') === null && preg_match('#^postgres(ql)?://#', (string)
     putenv('DB_CONNECTION=pgsql');
 }
 
-// TEMPORARY DIAGNOSTIC (remove once the Vercel 500 is understood): with ?diag=1
-// print the exception class/message instead of a generic error page.
-$diag = ($_GET['diag'] ?? null) === '1';
-$describe = fn (Throwable $e) => get_class($e).': '.mb_substr($e->getMessage(), 0, 400)
-    .' @ '.basename($e->getFile()).':'.$e->getLine();
+require __DIR__.'/../bootstrap/mb_polyfill.php';
 
-try {
-    require __DIR__.'/../bootstrap/mb_polyfill.php';
+require __DIR__.'/../vendor/autoload.php';
 
-    require __DIR__.'/../vendor/autoload.php';
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
-    /** @var Application $app */
-    $app = require_once __DIR__.'/../bootstrap/app.php';
-
-    if ($diag) {
-        $app->make(Illuminate\Contracts\Debug\ExceptionHandler::class)
-            ->renderable(fn (Throwable $e) => response('HANDLED '.$describe($e), 500, ['Content-Type' => 'text/plain']));
-    }
-
-    $app->handleRequest(Request::capture());
-} catch (Throwable $e) {
-    if (! $diag) {
-        throw $e;
-    }
-    http_response_code(500);
-    header('Content-Type: text/plain');
-    echo 'BOOT '.$describe($e);
-}
+$app->handleRequest(Request::capture());
