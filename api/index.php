@@ -49,15 +49,14 @@ foreach ([
     putenv("$key=$value");
 }
 
-// Vercel env vars are easy to leave blank. An empty driver name crashes Laravel's
-// manager classes (e.g. SESSION_DRIVER="" -> "createDriver(), 0 passed"), so treat
-// blank driver settings as unset and let the config defaults apply.
+// Vercel env vars are easy to leave blank (e.g. names copied from .env.example with no
+// value). Laravel treats "" as a real value, which breaks the app in confusing ways:
+// SESSION_DRIVER="" crashes every request ("createDriver(), 0 passed"), and
+// SESSION_LIFETIME="" makes cookies expire instantly (login always fails with 419).
+// Treat blank variables as unset so the config defaults apply.
 $env = fn (string $key) => $_SERVER[$key] ?? $_ENV[$key] ?? (getenv($key) === false ? null : getenv($key));
 
-foreach ([
-    'APP_MAINTENANCE_DRIVER', 'SESSION_DRIVER', 'CACHE_STORE', 'QUEUE_CONNECTION',
-    'MAIL_MAILER', 'BROADCAST_CONNECTION', 'FILESYSTEM_DISK', 'DB_CONNECTION',
-] as $key) {
+foreach (array_keys(getenv()) as $key) {
     if ($env($key) === '') {
         unset($_ENV[$key], $_SERVER[$key]);
         putenv($key);
