@@ -49,6 +49,28 @@ foreach ([
     putenv("$key=$value");
 }
 
+// Vercel env vars are easy to leave blank. An empty driver name crashes Laravel's
+// manager classes (e.g. SESSION_DRIVER="" -> "createDriver(), 0 passed"), so treat
+// blank driver settings as unset and let the config defaults apply.
+$env = fn (string $key) => $_SERVER[$key] ?? $_ENV[$key] ?? (getenv($key) === false ? null : getenv($key));
+
+foreach ([
+    'APP_MAINTENANCE_DRIVER', 'SESSION_DRIVER', 'CACHE_STORE', 'QUEUE_CONNECTION',
+    'MAIL_MAILER', 'BROADCAST_CONNECTION', 'FILESYSTEM_DISK', 'DB_CONNECTION',
+] as $key) {
+    if ($env($key) === '') {
+        unset($_ENV[$key], $_SERVER[$key]);
+        putenv($key);
+    }
+}
+
+// Without DB_CONNECTION Laravel defaults to SQLite and ignores DATABASE_URL, so
+// infer the driver from a Postgres connection string (e.g. Neon's DATABASE_URL).
+if ($env('DB_CONNECTION') === null && preg_match('#^postgres(ql)?://#', (string) ($env('DB_URL') ?? $env('DATABASE_URL')))) {
+    $_ENV['DB_CONNECTION'] = $_SERVER['DB_CONNECTION'] = 'pgsql';
+    putenv('DB_CONNECTION=pgsql');
+}
+
 // TEMPORARY DIAGNOSTIC (remove once the Vercel 500 is understood): with ?diag=1
 // print the exception class/message instead of a generic error page.
 $diag = ($_GET['diag'] ?? null) === '1';
